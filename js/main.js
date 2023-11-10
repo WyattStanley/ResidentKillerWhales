@@ -69,3 +69,38 @@ span.onclick = function() {
 };
 
 
+// MAP
+
+// Use your Mapbox access token
+mapboxgl.accessToken = 'pk.eyJ1Ijoid3lhdHRzdGFubGV5IiwiYSI6ImNsb2V2eHRrMDBodjIya3BlaXpnbGVmbzMifQ.4d9Kim_-fosnpZmJiyWoLg';
+
+// Create a map centered around a specific location
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11', // You can change the map style
+    center: [-123.1216, 49.2827], // [longitude, latitude]
+    zoom: 8 // Adjust the zoom level as needed
+});
+
+// Add a GeoJSON data source to the map
+map.on('load', function () {
+    map.addSource('points', {
+        'type': 'geojson',
+        'data': 'assets/japan.json' // Replace with the path to your GeoJSON file
+    });
+
+    // Add a layer to the map using the GeoJSON source
+    map.addLayer({
+        'id': 'points',
+        'type': 'symbol',
+        'source': 'points',
+        'layout': {
+            'icon-image': 'marker-15', // You can use different icons; check Mapbox documentation
+            'icon-allow-overlap': true
+        }
+    });
+});
+
+geojsonFetch();
+
+
